@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
   // Mensaje global
   socket.on("globalMessage", ({ from: userID, message }) => {
     console.log(message);
-    io.emit("globalMessage", `[Global] ${userID} ${message}`);
+    io.emit("globalMessage", `[Global] ${userID}: ${message}`);
   });
 
   //Lista de usuarios conectados
@@ -31,8 +31,9 @@ io.on("connection", (socket) => {
     socket.join(roomName);
   });
 
-  socket.on("privateMessage", ({ from, to, message }) => {
-    io.to([from, to]).emit("privateMessage", { from, message });
+  socket.on("privateMessage", ({ to, message }) => {
+    console.log({ id: socket.id, to });
+    io.to([socket.id, to]).emit("privateMessage", { from: socket.id, message });
   });
 
   socket.on("disconnect", () => {
