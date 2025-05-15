@@ -41,7 +41,6 @@ io.on("connection", (socket) => {
     io.emit("users:list", users);
   });
 });
-
 server.listen(3000, "172.18.20.65", () => {
   console.log("Server connected to http://172.18.20.65:3000");
 });
